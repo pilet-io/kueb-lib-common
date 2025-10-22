@@ -7,8 +7,12 @@ public class CachedLookup<T> implements Lookup<T> {
     private final PassiveExpiringMap<String,T> cache;
 
     public CachedLookup(Lookup<T> lookup) {
+        this(lookup, 20 * 60000);
+    }
+
+    public CachedLookup(Lookup<T> lookup, long ttl) {
         this.lookup = lookup;
-        this.cache = new PassiveExpiringMap<>(1200000);
+        this.cache = new PassiveExpiringMap<>(ttl);
     }
 
     @Override
