@@ -35,7 +35,7 @@ public class Stores {
         }
     }
 
-    public <T> Store<T> of(Class<T> clazz) {
+    public static <T> Store<T> of(Class<T> clazz) {
         return (Store<T>) driverMap.get(clazz);
     }
 }
