@@ -15,8 +15,8 @@
     </properties>
 
     <scm>
-        <developerConnection>scm:git:git@github.com:pilet-io/uno-lib-common.git</developerConnection>
-        <connection>scm:git:git@github.com:pilet-io/uno-lib-common.git</connection>
+        <developerConnection>scm:git:git@github.com:pilet-io/kueb-lib-common.git</developerConnection>
+        <connection>scm:git:git@github.com:pilet-io/kueb-lib-common.git</connection>
         <tag>1.167</tag>
     </scm>
 
