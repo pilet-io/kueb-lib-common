@@ -11,7 +11,7 @@ import java.util.Set;
 
 @Service
 public class Stores {
-    private final static Map<Class<?>, JdbcStoreDriver<?>> driverMap = new HashMap<>();
+    private final static Map<Class<?>, Store<?>> driverMap = new HashMap<>();
     private static JdbcTemplate jdbcTemplate;
 
     public static void init(JdbcTemplate jdbc, String... packages) {
@@ -25,10 +25,15 @@ public class Stores {
         Reflections reflections = new Reflections(packageName, Scanners.TypesAnnotated);
         Set<Class<?>> classes = reflections.getTypesAnnotatedWith(Table.class);
         for(Class<?> clazz : classes) {
-            driverMap.put(clazz, new JdbcStoreDriver<>(jdbcTemplate, clazz));
+            Table table = clazz.getAnnotation(Table.class);
+            Store<?> store = new JdbcStoreDriver<>(jdbcTemplate, clazz);
+            if(table.cached()) {
+                driverMap.put(clazz, new CachedStore<>(store));
+            } else {
+                driverMap.put(clazz, store);
+            }
         }
     }
-
 
     public <T> Store<T> of(Class<T> clazz) {
         return (Store<T>) driverMap.get(clazz);
